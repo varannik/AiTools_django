@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      args:
+        - DEV=true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./app:/app:Z
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=172.19.0.7
+      - DB_NAME=aitools
+      - DB_USER=varanik
+      - DB_PASS=Wsxokn2190
+      - DJ_SECRET_KEY=django-insecure-k*n7vw-bm76vt2@w8-0opw8yskr^zr0&0$m%i%-qrj2mpall8%
+      - JWT_SECRET_KEY=me
+    networks:
+      - Ex_V1
+networks:
+  Ex_V1:
+    name: V1
+    external: true
+
