@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+    restart: always
+    volumes:
+      - static-data:/vol/web
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DJ_SECRET_KEY=${DJ_SECRET_KEY}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    networks:
+      - default
+      - Ex_V1
+  
+  proxy:
+    build: 
+      context: ./proxy
+    restart: always
+    depends_on:
+      - app
+    ports:
+      - 80:8000
+    volumes:
+      - static-data:/vol/static
+
+networks:
+  Ex_V1:
+    name: V1
+    external: true
+
+
+volumes:
+  static-data:

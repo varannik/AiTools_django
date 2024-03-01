@@ -9,9 +9,12 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./app:/app:Z
+      - ./app:/app
     command: >
-      sh -c "python manage.py runserver 0.0.0.0:8000"
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
     environment:
       - DB_HOST=172.19.0.7
       - DB_NAME=aitools
@@ -19,10 +22,12 @@ services:
       - DB_PASS=Wsxokn2190
       - DJ_SECRET_KEY=django-insecure-k*n7vw-bm76vt2@w8-0opw8yskr^zr0&0$m%i%-qrj2mpall8%
       - JWT_SECRET_KEY=me
+      - DEBUG=1
     networks:
       - Ex_V1
+
+      
 networks:
   Ex_V1:
     name: V1
     external: true
-
