@@ -7,7 +7,7 @@ COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./scripts /scripts
 COPY ./app /app
 
-WORKDIR /app
+
 EXPOSE 8000
 
 ARG DEV=false
@@ -26,7 +26,8 @@ RUN python -m venv /py && \
         --disabled-password \
         --no-create-home \
         django-user && \
-    chown -R django-user:django-user app && \
+    chown -R django-user:django-user /app && \
+    chown -R django-user:django-user /app/* && \
     mkdir -p /vol/web/media && \
     mkdir -p /vol/web/static && \
     chown -R django-user:django-user /vol && \
@@ -34,6 +35,7 @@ RUN python -m venv /py && \
     chmod -R +x /scripts
 
 
+WORKDIR /app
 ENV PATH="/scripts:/py/bin:$PATH"
 USER django-user
 
