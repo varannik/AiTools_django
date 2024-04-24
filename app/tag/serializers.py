@@ -50,4 +50,4 @@ class LCTRes(serializers.Serializer):
     pricing = serializers.ListField(max_length=None)
     topic_selection = serializers.ListField(max_length=None)
     platform = serializers.ListField(max_length=None)
-    lunch_date = serializers.DateField()
+    lunch_date = serializers.CharField(max_length=None)
